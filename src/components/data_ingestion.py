@@ -1,5 +1,6 @@
 import os
 import sys
+sys.path.insert(0, '/MLproject/src')
 #import sys
 #sys.path.append('src/package1')
 from src.exception import CustomException
@@ -13,7 +14,7 @@ from src.components.data_transformation import DataTransformationConfig
 from src.components.model_trainer import ModelTrainerConfig
 from src.components.model_trainer import ModelTrainer
 
-@dataclass   #Decorator adds __init__() to user defined class
+@dataclass   #Decorator adds __init__() to user defined class. Variables will be created on creating object.
 class DataIngestionConfig:
     train_data_path = os.path.join('artifact','train.csv')
     test_data_path = os.path.join('artifact','test.csv')
@@ -28,7 +29,7 @@ class DataIngestion:
             df = pd.read_csv('F:/Python/Exercises/stud.csv')
             logging.info("read the dataset as dataframe")
             os.makedirs(os.path.dirname(self.ingestion_config.train_data_path),exist_ok = True)
-            #creates directory to train data path. exist_ok = True is an optional parameter that tells makedirs to not raise an error if the directory already exists.
+            #creates directory to train data path. exist_ok = True is an optional parameter that tells makedirs to not raise an error if the directory already exists.No need to use makedirs again for test data as directory would be the same.
             df.to_csv(self.ingestion_config.raw_data_path,index=False,header=True)
             # Entire df is stored in raw data path.header = True is include columns.
             train_set, test_set = train_test_split(df,test_size=0.2,random_state=44)
@@ -46,7 +47,7 @@ class DataIngestion:
         
 if __name__=="__main__":
     obj = DataIngestion()
-    train_data, test_data, = obj.initiate_data_ingestion()
+    train_data, test_data = obj.initiate_data_ingestion()
     print(train_data,test_data)
     data_transform = DataTransformation()
     train_arr,test_arr,_ = data_transform.initiate_data_transformation(train_data,test_data)

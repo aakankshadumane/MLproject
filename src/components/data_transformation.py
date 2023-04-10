@@ -76,10 +76,14 @@ class DataTransformation:
             logging.info("applying preprocessing obj on train test data")
 
             input_feature_train_arr = preprocessing_obj.fit_transform(input_feature_train_df)
+            # learn and apply a transformation to the input data in a single step
             input_feature_test_arr = preprocessing_obj.transform(input_feature_test_df)
+            # applies a transformation to the input data using previously learned parameters
+            # fit_transform() is used during the training phase to learn and apply a transformation to the training data, while transform() is used during the testing phase to apply the same transformation to the test data using the previously learned parameters from the training data.
 
             train_arr = np.c_[input_feature_train_arr,np.array(target_feature_train_df)]
             test_arr = np.c_[input_feature_test_arr, np.array(target_feature_test_df)]
+            # concatening the columns. here, train arr becomes independent + dependent columns
 
             save_object(
                 file_path = self.data_transformation_config.preprocessor_obj_file,

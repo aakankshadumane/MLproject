@@ -7,6 +7,7 @@ from sklearn.ensemble import (
     GradientBoostingRegressor,
     RandomForestRegressor,
 )
+
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score
 from sklearn.neighbors import KNeighborsRegressor
@@ -33,7 +34,7 @@ class ModelTrainer:
                 test_array[:,:-1],
                 test_array[:,-1]
             )
-            models = {
+            models = { 
                 "Random Forest": RandomForestRegressor(),
                 "Decision Tree": DecisionTreeRegressor(),
                 "Gradient Boosting": GradientBoostingRegressor(),
